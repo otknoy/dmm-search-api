@@ -11,7 +11,10 @@ import (
 func main() {
 	handler := &interfaces.SearchHandler{
 		SearchService: application.SearchService{
-			ItemSearcher: &infrastructure.DmmApiSearcher{},
+			ItemSearcher: &infrastructure.DmmApiSearcher{
+				ApiId:       "Z5kd6ymEvRSNneLSP24Y",
+				AffiliateId: "exsearch-990",
+			},
 		},
 	}
 
