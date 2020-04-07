@@ -2,6 +2,7 @@ package main
 
 import (
 	"dmm-search-api/application"
+	"dmm-search-api/infrastructure"
 	"dmm-search-api/interfaces"
 	"log"
 	"net/http"
@@ -9,7 +10,9 @@ import (
 
 func main() {
 	handler := &interfaces.SearchHandler{
-		SearchService: application.SearchService{},
+		SearchService: application.SearchService{
+			ItemSearcher: &infrastructure.DmmApiSearcher{},
+		},
 	}
 
 	mux := http.NewServeMux()
