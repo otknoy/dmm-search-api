@@ -1,15 +1,27 @@
 package main
 
 import (
+	"dmm-search-api/application"
+	"dmm-search-api/infrastructure"
+	"dmm-search-api/interfaces"
 	"log"
+	"net/http"
 )
 
 func main() {
-	port := 8080
+	handler := &interfaces.SearchHandler{
+		SearchService: application.SearchService{
+			ItemSearcher: &infrastructure.DmmApiSearcher{
+				ApiId:       "Z5kd6ymEvRSNneLSP24Y",
+				AffiliateId: "exsearch-990",
+			},
+		},
+	}
 
-	// http.HandleFunc("/search", handler.Search)
-	// http.HandleFunc("/facet", handler.Facet)
+	mux := http.NewServeMux()
+	mux.Handle("/search", handler)
 
-	// log.Fatal(http.ListenAndServe(":"+string(port), nil))
-	log.Print(port)
+	if err := http.ListenAndServe(":8080", mux); err != nil {
+		log.Fatal(err)
+	}
 }
